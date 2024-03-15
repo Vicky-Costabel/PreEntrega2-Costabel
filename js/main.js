@@ -1,38 +1,37 @@
-let i = 1;
-
-function agregarTareas (){
-      tarea = prompt (`Ingrese la tarea.`);
-      if (tarea !== null && tarea !== " "){
-            finalizarTarea();   
-      } else if (tarea === "ESC" || tarea === "esc"){
-            alert (`Finalizando proceso.`)
+function respuestas() {
+      let respuestas = {
+            ronda1: seleccion("Eleccion 1"),
+            ronda2: seleccion("Eleccion 2"),
+            ronda3: seleccion("Eleccion 3")
+      };
+      let grupoA = [];
+      let grupoB = [];
+      for (let ronda in respuestas) {
+            if (respuestas.hasOwnProperty(ronda)) {
+                  if (respuestas[ronda] === "a") {
+                        grupoA.push(ronda);
+                  } else if (respuestas[ronda] === "b") {
+                        grupoB.push(ronda);
+                  } else {
+                        if (Math.random() > 0.5) {
+                              grupoA.push(ronda);
+                        } else {
+                              grupoB.push(ronda);
+                        }
+                  }
+             }
       }
+      let mayor = grupoA.length > grupoB.length ? "A" : "B";
+      alert(`El grupo Ganador es el ${mayor}`);
 }
-
-function finalizarTarea () {
-      alert (`La tarea Nº ${i} actual es: ${tarea}.`);
-      let finalizar = prompt (`¿La tarea Nº ${i} finalizó? (Responder 'Y' o 'N')`);
-      if (finalizar === "Y" || finalizar === "y"){
-            masTarea();
-      } else if(finalizar === "N" || finalizar === "n" || finalizar === null || finalizar === " "){
-            alert (`La tarea ${i} sigue sin finalizar.`);
-            finalizarTarea()
-      } else { 
-            alert (`Respuesta Invalida. Finalizando proceso`)
+  
+  function seleccion(ronda) {
+      let opcion = prompt(`${ronda}. Elige entre: "A", "B", o "C"`).toLowerCase();
+      if (opcion !== "a" && opcion !== "b" && opcion !== "c") {
+            alert("Respuesta inválida");
+            return seleccion(ronda);
       }
+      return opcion;
 }
-
-function masTarea() {
-      let masTareas = prompt (`¿Tiene mas tareas? (Responder 'Y' o 'N')`);
-      if (masTareas === "Y" || masTareas === "y"){
-                  i++;
-                  agregarTareas();
-      } else if (masTareas === "N" || masTareas === "n"){
-            alert (`Se realizaron ${i} tareas en total.`);
-      } else {
-            alert (`Respuesta invalida`);
-            masTarea();
-      }
-}
-
-agregarTareas();
+  
+respuestas();
